@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox
+        android:id="@+id/checkBoxTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:id="@+id/listName"
+            android:text="To Do"
+            android:textColor="@color/blue"
+            android:gravity="center_vertical"
+            android:autoSizeTextType="uniform"
+            android:autoSizePresetSizes="@array/autosize_text_sizes"
+            android:layout_marginTop="5dp" />
+
+            <TextView
+                android:id="@+id/todo_type"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_toEndOf="@id/listName"
+                android:layout_marginTop="5dp"
+                android:text="Assignment"
+                android:textSize="15sp"
+                android:textColor="@color/light"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:layout_marginRight="25dp"
+                 />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/dueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:text="Date"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/course"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toEndOf="@id/dueDate"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:text="Course"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toEndOf="@id/course"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:text="Location"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
