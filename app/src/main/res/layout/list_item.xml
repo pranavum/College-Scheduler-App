@@ -50,7 +50,7 @@
                 android:layout_toEndOf="@id/listName"
                 android:layout_marginTop="5dp"
                 android:text="Assignment"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:textColor="@color/light"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
@@ -64,10 +64,21 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/dueTime"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:text="Time"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
                 android:id="@+id/dueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/dueTime"
+                android:layout_marginLeft="15dp"
                 android:text="Date"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />

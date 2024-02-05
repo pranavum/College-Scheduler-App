@@ -1,24 +1,28 @@
 package com.example.firstproject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.ViewHolder> {
 
+    public interface OnClassClickListener {
+        void onClassClick(ClassListData classData, int position);
+    }
+
     private Context context;
     private ArrayList<ClassListData> dataArrayList;
+    private OnClassClickListener listener;
 
-    public ClassListAdapter(Context context, ArrayList<ClassListData> dataArrayList) {
+    public ClassListAdapter(Context context, ArrayList<ClassListData> dataArrayList, OnClassClickListener listener) {
         this.context = context;
         this.dataArrayList = dataArrayList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,20 +42,21 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
         holder.location.setText(classListData.getLocation());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, AddClassActivity.class);
-            intent.putExtra("className", classListData.getClassName());
-            intent.putExtra("classTime", classListData.getClassTime());
-            intent.putExtra("daysOfWeek", classListData.getDaysOfWeek());
-            intent.putExtra("instructorName", classListData.getInstructorName());
-            intent.putExtra("location", classListData.getLocation());
-            intent.putExtra("position", position);
-            ((AppCompatActivity) context).startActivityForResult(intent, 1);  // Ensure this request code is unique
+            if (listener != null) {
+                listener.onClassClick(classListData, position);
+            }
         });
     }
 
     @Override
     public int getItemCount() {
         return dataArrayList.size();
+    }
+
+    public interface ClassListTouchHelperContract {
+        void onRowMoved(int fromPosition, int toPosition);
+        void onRowSelected(ViewHolder myViewHolder);
+        void onRowClear(ViewHolder myViewHolder);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,10 +71,4 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
             location = itemView.findViewById(R.id.location);
         }
     }
-
-    public void updateClassData(int position, ClassListData newData) {
-        dataArrayList.set(position, newData);
-        notifyItemChanged(position);
-    }
-    public static final int REQUEST_CODE_EDIT_CLASS = 1;
 }

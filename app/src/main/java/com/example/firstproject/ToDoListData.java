@@ -3,15 +3,17 @@ package com.example.firstproject;
 public class ToDoListData {
     private String taskName;
     private String taskType; // Assuming a simple String to represent the selected item from the Spinner
+    private String dueTime;
     private String dueDate;
     private String course;
     private String location;
     private boolean isCompleted;
 
     // Constructor
-    public ToDoListData(String taskName, String taskType, String dueDate, String course, String location, boolean isCompleted) {
+    public ToDoListData(String taskName, String taskType, String dueTime, String dueDate, String course, String location, boolean isCompleted) {
         this.taskName = taskName;
         this.taskType = taskType;
+        this.dueTime = dueTime;
         this.dueDate = dueDate;
         this.course = course;
         this.location = location;
@@ -25,6 +27,10 @@ public class ToDoListData {
 
     public String getTaskType() {
         return taskType;
+    }
+
+    public String getDueTime() {
+        return dueTime;
     }
 
     public String getDueDate() {
@@ -41,6 +47,10 @@ public class ToDoListData {
 
     public boolean isCompleted() {
         return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.isCompleted = completed;
     }
 }
 

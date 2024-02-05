@@ -1,5 +1,7 @@
 package com.example.firstproject;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,6 +15,8 @@ import com.example.firstproject.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    private ActivityResultLauncher<Intent> addClassLauncher;
+    private ActivityResultLauncher<Intent> addToDoLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         replaceFragment(new HomeFragment());
+        setupAddClassLauncher();
+        setupAddToDoLauncher();
+        setupFloatingActionButton();
+
         binding.bottomNavigationView.setBackground(null);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -45,25 +54,42 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ClassListAdapter.REQUEST_CODE_EDIT_CLASS && resultCode == RESULT_OK && data != null) {
-            int position = data.getIntExtra("position", -1);
-            if (position != -1) {
-                String className = data.getStringExtra("className");
-                String classTime = data.getStringExtra("classTime");  // Handle classTime in AddClassActivity to send it back properly
-                String daysOfWeek = data.getStringExtra("daysOfWeek");
-                String instructorName = data.getStringExtra("instructorName");
-                String location = data.getStringExtra("location");
-
-                ClassListData updatedClass = new ClassListData(className, classTime, daysOfWeek, instructorName, location);
-
+    private void setupAddClassLauncher() {
+        addClassLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Intent data = result.getData();
                 Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
                 if (fragment instanceof HomeFragment) {
-                    ((HomeFragment) fragment).updateClassData(position, updatedClass);
+                    ((HomeFragment) fragment).addClassItem(data);
                 }
             }
-        }
+        });
+    }
+
+    private void setupAddToDoLauncher() {
+        addToDoLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Intent data = result.getData();
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+                if (fragment instanceof TodoFragment) {
+                    ((TodoFragment) fragment).addToDoItem(data); // Assuming TodoFragment has a method addToDoItem to handle new/edited ToDos
+                }
+            }
+        });
+    }
+
+    private void setupFloatingActionButton() {
+        binding.fabAddClass.setOnClickListener(v -> {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+            if (currentFragment instanceof HomeFragment) {
+                // Open AddClassActivity
+                Intent intent = new Intent(MainActivity.this, AddClassActivity.class);
+                addClassLauncher.launch(intent);
+            } else if (currentFragment instanceof TodoFragment) {
+                // Open AddTodoActivity
+                Intent intent = new Intent(MainActivity.this, AddTodoActivity.class);
+                addToDoLauncher.launch(intent);
+            }
+        });
     }
 }
