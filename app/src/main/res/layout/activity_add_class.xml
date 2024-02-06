@@ -55,19 +55,56 @@
         android:layout_marginTop="10sp"
         android:textSize="24sp"
         android:textStyle="bold"/>
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/spinner_border">
+        android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinnerDays"
+        <RadioButton
+            android:id="@+id/radioButtonMonday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/days_array"
-            android:paddingVertical="15dp"
-             />
-    </RelativeLayout>
+            android:text="M"
+            android:buttonTint="@color/blue"
+            android:textColor="@color/white"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonTuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="T"
+            android:buttonTint="@color/blue"
+            android:textColor="@color/white"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonWednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="W"
+            android:buttonTint="@color/blue"
+            android:textColor="@color/white"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonThursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="TR"
+            android:buttonTint="@color/blue"
+            android:textColor="@color/white"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonFriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="F"
+            android:buttonTint="@color/blue"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
     <!-- Instructor Name -->
     <LinearLayout

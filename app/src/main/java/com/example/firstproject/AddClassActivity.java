@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
 import com.example.firstproject.databinding.ActivityAddClassBinding;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -29,7 +31,6 @@ public class AddClassActivity extends AppCompatActivity {
             populateExistingData();
         }
 
-        setupSpinner();
         setupTimePicker();
         setupDoneButton();
     }
@@ -39,21 +40,18 @@ public class AddClassActivity extends AppCompatActivity {
         binding.editTextInstructorName.setText(getIntent().getStringExtra("instructorName"));
         binding.editTextLocation.setText(getIntent().getStringExtra("location"));
         // Parsing and setting the class time and days of the week will be done in setupTimePicker() and setupSpinner()
+        String daysOfWeek = getIntent().getStringExtra("daysOfWeek");
+        if (daysOfWeek != null) {
+            setDaysOfWeek(daysOfWeek);
+        }
     }
 
-    private void setupSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.days_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerDays.setAdapter(adapter);
-
-        if (isEditing) {
-            String daysOfWeek = getIntent().getStringExtra("daysOfWeek");
-            if (daysOfWeek != null) {
-                int spinnerPosition = adapter.getPosition(daysOfWeek);
-                binding.spinnerDays.setSelection(spinnerPosition);
-            }
-        }
+    private void setDaysOfWeek(String daysOfWeek) {
+        binding.radioButtonMonday.setChecked(daysOfWeek.contains("M"));
+        binding.radioButtonTuesday.setChecked(daysOfWeek.contains("T"));
+        binding.radioButtonWednesday.setChecked(daysOfWeek.contains("W"));
+        binding.radioButtonThursday.setChecked(daysOfWeek.contains("Th"));
+        binding.radioButtonFriday.setChecked(daysOfWeek.contains("F"));
     }
 
     private void setupTimePicker() {
@@ -84,13 +82,32 @@ public class AddClassActivity extends AppCompatActivity {
         }
     }
 
+
     private void setupDoneButton() {
         binding.btnDone.setOnClickListener(v -> {
+            String className = binding.editTextClassName.getText().toString().trim(); // Trim to remove leading and trailing spaces
+
+            // Check if the class name is empty
+            if (className.equals("")) {
+                // Inform the user that class name is required
+                Toast.makeText(AddClassActivity.this, "Class name is required.", Toast.LENGTH_SHORT).show();
+                return; // Exit the method without proceeding further
+            }
+
+            // Continue with your existing code if class name is not empty
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("className", binding.editTextClassName.getText().toString());
+            resultIntent.putExtra("className", className);
             resultIntent.putExtra("instructorName", binding.editTextInstructorName.getText().toString());
             resultIntent.putExtra("location", binding.editTextLocation.getText().toString());
-            resultIntent.putExtra("daysOfWeek", binding.spinnerDays.getSelectedItem().toString());
+
+            StringBuilder daysBuilder = new StringBuilder();
+            if (binding.radioButtonMonday.isChecked()) daysBuilder.append("M");
+            if (binding.radioButtonTuesday.isChecked()) daysBuilder.append("T");
+            if (binding.radioButtonWednesday.isChecked()) daysBuilder.append("W");
+            if (binding.radioButtonThursday.isChecked()) daysBuilder.append("Th");
+            if (binding.radioButtonFriday.isChecked()) daysBuilder.append("F");
+
+            resultIntent.putExtra("daysOfWeek", daysBuilder.toString());
 
             // Get the hour and minute from the TimePicker
             int hour = binding.timePickerClassTime.getHour();
@@ -113,4 +130,5 @@ public class AddClassActivity extends AppCompatActivity {
             finish(); // Finish activity and return to the previous one
         });
     }
+
 }

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.example.firstproject.databinding.ActivityAddTodoBinding;
 
 import java.text.ParseException;
@@ -125,18 +127,34 @@ public class AddTodoActivity extends AppCompatActivity {
 
     private void setupDoneButton() {
         binding.btnDone.setOnClickListener(v -> {
+            String toDoName = binding.editTextTodoName.getText().toString().trim();
+            if (toDoName.equals("")) {
+                // Inform the user that class name is required
+                Toast.makeText(AddTodoActivity.this, "To do name is required.", Toast.LENGTH_SHORT).show();
+                return; // Exit the method without proceeding further
+            }
+            String toDoDate = binding.editTextDate.getText().toString().trim();
+            if (toDoDate.equals("")) {
+                // Inform the user that class name is required
+                Toast.makeText(AddTodoActivity.this, "To do Date is required.", Toast.LENGTH_SHORT).show();
+                return; // Exit the method without proceeding further
+            }
             Intent resultIntent = new Intent();
             // Add data to resultIntent
             resultIntent.putExtra("taskName", binding.editTextTodoName.getText().toString());
             resultIntent.putExtra("taskType", binding.spinnerToDoTypes.getSelectedItem().toString());
             resultIntent.putExtra("dueDate", binding.editTextDate.getText().toString());
-            resultIntent.putExtra("location", binding.editTextLocation.getText().toString());
+            if(binding.editTextLocation.getText().toString().equals("")) {
+                resultIntent.putExtra("location", "");
+            } else {
+                resultIntent.putExtra("location", "Location: " + binding.editTextLocation.getText().toString());
+            }
             if ("Other".equals(binding.spinnerToDoTypes.getSelectedItem().toString()) || "Courses".equals(binding.spinnerCourses.getSelectedItem().toString())) {
                 // If "Other" is selected, set course to ""
                 resultIntent.putExtra("course", "");
             } else {
                 // Otherwise, use the selected course
-                resultIntent.putExtra("course", binding.spinnerCourses.getSelectedItem().toString());
+                resultIntent.putExtra("course", "Course: " + binding.spinnerCourses.getSelectedItem().toString());
             }
             // Get the hour and minute from the TimePicker
             int hour = binding.timePicker.getHour();

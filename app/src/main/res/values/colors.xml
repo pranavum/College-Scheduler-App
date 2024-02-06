@@ -5,5 +5,7 @@
     <color name="blue">#0189EA</color>
     <color name="teal">#87CEEB</color>
     <color name="gray">#838383</color>
+    <color name="darkGray">#656565</color>
     <color name="light">#D3D3D3</color>
+    <color name="lightBlue">#F5FAFA</color>
 </resources>
