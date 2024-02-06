@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.firstproject.databinding.ActivityAddClassBinding;
@@ -24,6 +25,10 @@ public class AddClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddClassBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            finish(); // This line will close the current activity
+        });
 
         // Check if we're in editing mode
         isEditing = getIntent().getBooleanExtra("editing", false);
@@ -47,11 +52,11 @@ public class AddClassActivity extends AppCompatActivity {
     }
 
     private void setDaysOfWeek(String daysOfWeek) {
-        binding.radioButtonMonday.setChecked(daysOfWeek.contains("M"));
-        binding.radioButtonTuesday.setChecked(daysOfWeek.contains("T"));
-        binding.radioButtonWednesday.setChecked(daysOfWeek.contains("W"));
-        binding.radioButtonThursday.setChecked(daysOfWeek.contains("Th"));
-        binding.radioButtonFriday.setChecked(daysOfWeek.contains("F"));
+        binding.checkBoxMonday.setChecked(daysOfWeek.contains("M"));
+        binding.checkBoxTuesday.setChecked(daysOfWeek.contains("T"));
+        binding.checkBoxWednesday.setChecked(daysOfWeek.contains("W"));
+        binding.checkBoxThursday.setChecked(daysOfWeek.contains("TR"));
+        binding.checkBoxFriday.setChecked(daysOfWeek.contains("F"));
     }
 
     private void setupTimePicker() {
@@ -69,7 +74,7 @@ public class AddClassActivity extends AppCompatActivity {
                     Calendar calendar = Calendar.getInstance();
                     if (date != null) {
                         calendar.setTime(date);
-                        int hour = calendar.get(Calendar.HOUR); // Use HOUR for 12-hour format
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY); // Use HOUR for 12-hour format
                         int minute = calendar.get(Calendar.MINUTE);
                         binding.timePickerClassTime.setHour(hour);
                         binding.timePickerClassTime.setMinute(minute);
@@ -85,29 +90,32 @@ public class AddClassActivity extends AppCompatActivity {
 
     private void setupDoneButton() {
         binding.btnDone.setOnClickListener(v -> {
-            String className = binding.editTextClassName.getText().toString().trim(); // Trim to remove leading and trailing spaces
+            String className = binding.editTextClassName.getText().toString().trim();
+            String instructorName = binding.editTextInstructorName.getText().toString().trim();
+            String location = binding.editTextLocation.getText().toString().trim();
 
-            // Check if the class name is empty
-            if (className.equals("")) {
-                // Inform the user that class name is required
-                Toast.makeText(AddClassActivity.this, "Class name is required.", Toast.LENGTH_SHORT).show();
-                return; // Exit the method without proceeding further
+            // Build the days of week string
+            StringBuilder daysBuilder = new StringBuilder();
+            if (binding.checkBoxMonday.isChecked()) daysBuilder.append("M");
+            if (binding.checkBoxTuesday.isChecked()) daysBuilder.append("T");
+            if (binding.checkBoxWednesday.isChecked()) daysBuilder.append("W");
+            if (binding.checkBoxThursday.isChecked()) daysBuilder.append("TR");
+            if (binding.checkBoxFriday.isChecked()) daysBuilder.append("F");
+            String daysOfWeek = daysBuilder.toString();
+
+            // Validate all fields
+            if (className.isEmpty() || instructorName.isEmpty() || location.isEmpty() || daysOfWeek.isEmpty()) {
+                Toast.makeText(AddClassActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
+                return; // Exit the method if any field is empty
             }
 
-            // Continue with your existing code if class name is not empty
+            // No need to check time picker as it always has a value
+
             Intent resultIntent = new Intent();
             resultIntent.putExtra("className", className);
-            resultIntent.putExtra("instructorName", binding.editTextInstructorName.getText().toString());
-            resultIntent.putExtra("location", binding.editTextLocation.getText().toString());
-
-            StringBuilder daysBuilder = new StringBuilder();
-            if (binding.radioButtonMonday.isChecked()) daysBuilder.append("M");
-            if (binding.radioButtonTuesday.isChecked()) daysBuilder.append("T");
-            if (binding.radioButtonWednesday.isChecked()) daysBuilder.append("W");
-            if (binding.radioButtonThursday.isChecked()) daysBuilder.append("Th");
-            if (binding.radioButtonFriday.isChecked()) daysBuilder.append("F");
-
-            resultIntent.putExtra("daysOfWeek", daysBuilder.toString());
+            resultIntent.putExtra("instructorName", instructorName);
+            resultIntent.putExtra("location", location);
+            resultIntent.putExtra("daysOfWeek", daysOfWeek);
 
             // Get the hour and minute from the TimePicker
             int hour = binding.timePickerClassTime.getHour();
@@ -130,5 +138,6 @@ public class AddClassActivity extends AppCompatActivity {
             finish(); // Finish activity and return to the previous one
         });
     }
+
 
 }

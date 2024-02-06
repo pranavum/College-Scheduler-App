@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -56,57 +61,57 @@
         android:textSize="24sp"
         android:textStyle="bold"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/radioButtonMonday"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="M"
-            android:buttonTint="@color/blue"
-            android:textColor="@color/white"/>
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/radioButtonTuesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="T"
-            android:buttonTint="@color/blue"
-            android:textColor="@color/white"/>
+            <CheckBox
+                android:id="@+id/checkBoxMonday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="M"
+                android:buttonTint="@color/blue"
+                android:textColor="@color/white"/>
 
-        <RadioButton
-            android:id="@+id/radioButtonWednesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="W"
-            android:buttonTint="@color/blue"
-            android:textColor="@color/white"/>
+            <CheckBox
+                android:id="@+id/checkBoxTuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="T"
+                android:buttonTint="@color/blue"
+                android:textColor="@color/white"/>
 
-        <RadioButton
-            android:id="@+id/radioButtonThursday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="TR"
-            android:buttonTint="@color/blue"
-            android:textColor="@color/white"/>
+            <CheckBox
+                android:id="@+id/checkBoxWednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="W"
+                android:buttonTint="@color/blue"
+                android:textColor="@color/white"/>
 
-        <RadioButton
-            android:id="@+id/radioButtonFriday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="F"
-            android:buttonTint="@color/blue"
-            android:textColor="@color/white"/>
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/checkBoxThursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="TR"
+                android:buttonTint="@color/blue"
+                android:textColor="@color/white"/>
 
-    <!-- Instructor Name -->
+            <CheckBox
+                android:id="@+id/checkBoxFriday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="F"
+                android:buttonTint="@color/blue"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <!-- Instructor Name -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,8 +161,19 @@
     <Button
         android:id="@+id/btnDone"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="40dp"
         android:layout_height="wrap_content"
         android:text="Done"
         android:layout_marginTop="16dp"/>
-
 </LinearLayout>
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:background="@android:color/transparent"
+        android:padding="5dp"
+        android:contentDescription="Back"
+        android:layout_alignParentBottom="true"
+        android:elevation="4dp" />
+</RelativeLayout>

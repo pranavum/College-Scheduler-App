@@ -67,6 +67,6 @@
         android:id="@+id/applyFilterButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Apply Filter" />
+        android:text="Apply Sort" />
 </LinearLayout>
 

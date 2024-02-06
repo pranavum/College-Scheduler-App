@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,6 +35,10 @@ public class AddTodoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddTodoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            finish(); // This line will close the current activity
+        });
 
         isEditing = getIntent().getBooleanExtra("editing", false);
 
@@ -63,7 +68,7 @@ public class AddTodoActivity extends AppCompatActivity {
                     Calendar calendar = Calendar.getInstance();
                     if (date != null) {
                         calendar.setTime(date);
-                        int hour = calendar.get(Calendar.HOUR); // Use HOUR for 12-hour format
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY); // Use HOUR for 12-hour format
                         int minute = calendar.get(Calendar.MINUTE);
                         binding.timePicker.setHour(hour);
                         binding.timePicker.setMinute(minute);
@@ -145,16 +150,16 @@ public class AddTodoActivity extends AppCompatActivity {
             resultIntent.putExtra("taskType", binding.spinnerToDoTypes.getSelectedItem().toString());
             resultIntent.putExtra("dueDate", binding.editTextDate.getText().toString());
             if(binding.editTextLocation.getText().toString().equals("")) {
-                resultIntent.putExtra("location", "");
+                resultIntent.putExtra("location", "N/A");
             } else {
-                resultIntent.putExtra("location", "Location: " + binding.editTextLocation.getText().toString());
+                resultIntent.putExtra("location", binding.editTextLocation.getText().toString());
             }
-            if ("Other".equals(binding.spinnerToDoTypes.getSelectedItem().toString()) || "Courses".equals(binding.spinnerCourses.getSelectedItem().toString())) {
+            if ("Courses".equals(binding.spinnerCourses.getSelectedItem().toString())) {
                 // If "Other" is selected, set course to ""
-                resultIntent.putExtra("course", "");
+                resultIntent.putExtra("course", "N/A");
             } else {
                 // Otherwise, use the selected course
-                resultIntent.putExtra("course", "Course: " + binding.spinnerCourses.getSelectedItem().toString());
+                resultIntent.putExtra("course", binding.spinnerCourses.getSelectedItem().toString());
             }
             // Get the hour and minute from the TimePicker
             int hour = binding.timePicker.getHour();
