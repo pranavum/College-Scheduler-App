@@ -18,7 +18,7 @@ import java.util.Locale;
 public class AddClassActivity extends AppCompatActivity {
 
     private ActivityAddClassBinding binding;
-    private boolean isEditing = false; // Flag to check if we are adding a new class or editing an existing one
+    private boolean isEditing = false; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class AddClassActivity extends AppCompatActivity {
         binding.editTextClassName.setText(getIntent().getStringExtra("className"));
         binding.editTextInstructorName.setText(getIntent().getStringExtra("instructorName"));
         binding.editTextLocation.setText(getIntent().getStringExtra("location"));
-        // Parsing and setting the class time and days of the week will be done in setupTimePicker() and setupSpinner()
         String daysOfWeek = getIntent().getStringExtra("daysOfWeek");
         if (daysOfWeek != null) {
             setDaysOfWeek(daysOfWeek);

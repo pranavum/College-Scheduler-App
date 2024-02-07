@@ -41,5 +41,4 @@ public class ClassListData {
         return location;
     }
 
-    // Optionally, you can add setter methods if you need to modify the fields after object creation.
 }

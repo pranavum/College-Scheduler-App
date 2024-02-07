@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment implements ClassListAdapter.OnClassCl
         dataArrayList.add(newClass);
         updateSharedViewModelCourses();
         classListAdapter.notifyDataSetChanged();
-        saveClassData(); // Save the updated list
+        saveClassData();
     }
 
     @Override
@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment implements ClassListAdapter.OnClassCl
         intent.putExtra("location", classData.getLocation());
         intent.putExtra("position", position);
 
-        addClassLauncher.launch(intent); // Launch AddClassActivity with launcher for editing
+        addClassLauncher.launch(intent);
     }
 
     private void saveClassData() {
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements ClassListAdapter.OnClassCl
     private void updateSharedViewModelCourses() {
         List<String> courseNames = new ArrayList<>();
         for (ClassListData classData : dataArrayList) {
-            courseNames.add(classData.getClassName()); // Assuming getClassName() returns the course name
+            courseNames.add(classData.getClassName());
         }
         CourseDataManager.getInstance().setCourseNames(courseNames);
     }

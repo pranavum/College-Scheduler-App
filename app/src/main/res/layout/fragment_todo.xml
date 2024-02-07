@@ -65,7 +65,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/listview"
                 android:scrollbars="vertical"
-                tools:listitem="@layout/list_item" />
+                tools:listitem="@layout/list_item"
+                android:layout_marginBottom="70dp" />
 
         </LinearLayout>
     </RelativeLayout>

@@ -155,7 +155,7 @@ public class AddTodoActivity extends AppCompatActivity {
                 resultIntent.putExtra("location", binding.editTextLocation.getText().toString());
             }
             if ("Courses".equals(binding.spinnerCourses.getSelectedItem().toString())) {
-                // If "Other" is selected, set course to ""
+                // If "Other" is selected, set course to N/A
                 resultIntent.putExtra("course", "N/A");
             } else {
                 // Otherwise, use the selected course
@@ -183,10 +183,8 @@ public class AddTodoActivity extends AppCompatActivity {
     }
 
     private void populateExistingData() {
-        // Populate existing data for editing
         binding.editTextTodoName.setText(getIntent().getStringExtra("taskName"));
         binding.editTextDate.setText(getIntent().getStringExtra("dueDate"));
         binding.editTextLocation.setText(getIntent().getStringExtra("location"));
-        // Task type will be set in setupSpinner() based on existing data
     }
 }
